@@ -93,7 +93,7 @@ public final class EmployeeRepository {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                employee = setNewEmployee(rs);
+                employee = getNewEmployee(rs);
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -110,7 +110,7 @@ public final class EmployeeRepository {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Employee employee = setNewEmployee(rs);
+                Employee employee = getNewEmployee(rs);
 
                 listEmployees.add(employee);
             }
@@ -121,7 +121,7 @@ public final class EmployeeRepository {
         return listEmployees;
     }
 
-    private static Employee setNewEmployee(ResultSet resultSet) throws SQLException {
+    private static Employee getNewEmployee(ResultSet resultSet) throws SQLException {
         Employee employee = new Employee();
 
         employee.setId(resultSet.getInt(1));
