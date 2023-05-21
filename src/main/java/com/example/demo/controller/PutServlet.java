@@ -19,7 +19,6 @@ public class PutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
         try {
             EmployeeService.updateEmployee(request);
@@ -27,7 +26,5 @@ public class PutServlet extends HttpServlet {
         } catch (BadRequestException | EmployeeNotFoundException e) {
             response.sendError(400, e.getMessage());
         }
-
-        out.close();
     }
 }

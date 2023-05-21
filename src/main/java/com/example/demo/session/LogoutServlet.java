@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 /**
  * Servlet implementation class LogoutServlet
  */
-@WebServlet("/LogoutServlet")
+@WebServlet("/logoutServlet")
 public class LogoutServlet extends HttpServlet {
 
     @Serial
