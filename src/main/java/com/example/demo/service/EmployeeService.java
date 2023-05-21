@@ -35,7 +35,7 @@ public final class EmployeeService {
         int status = EmployeeRepository.update(employee);
 
         if (status == 0) {
-            throw new EmployeeNotFoundException(employee.getId());
+            throw new EmployeeNotFoundException(employee.id());
         }
     }
 
@@ -92,14 +92,10 @@ public final class EmployeeService {
     private static Employee getEmployeeWithId(HttpServletRequest request) throws BadRequestException {
 
         int id = getIdValueFromParameter(request);
-
-        Employee employee = getEmployee(request);
-        employee.setId(id);
-
-        return employee;
+        return getEmployee(request, id);
     }
 
-    private static Employee getEmployee(HttpServletRequest request) throws BadRequestException {
+    private static Employee getEmployee(HttpServletRequest request, int... requestId) throws BadRequestException {
 
         String name = request.getParameter("name");
         String email = request.getParameter("email");
@@ -109,15 +105,9 @@ public final class EmployeeService {
             throw new BadRequestException();
         }
 
-        return setEmployee(name, email, country);
-    }
+        int id = requestId.length == 0 ? requestId.length : requestId[0];
 
-    private static Employee setEmployee(String name, String email, String country) {
-        Employee employee = new Employee();
-        employee.setName(name);
-        employee.setEmail(email);
-        employee.setCountry(country);
-        return employee;
+        return new Employee(id, name, country, email);
     }
 
     private static boolean checkStringParameters(String... parameters) {

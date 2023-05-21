@@ -43,7 +43,7 @@ public final class EmployeeRepository {
 
         try (PreparedStatement ps = connection.prepareStatement(UPDATE_USER)) {
             saveNewEmployeeIntoDB(employee, ps);
-            ps.setInt(4, employee.getId());
+            ps.setInt(4, employee.id());
 
             status = ps.executeUpdate();
         } catch (SQLException sqlException) {
@@ -136,18 +136,16 @@ public final class EmployeeRepository {
     }
 
     private static Employee getNewEmployee(ResultSet resultSet) throws SQLException {
-        Employee employee = new Employee();
-
-        employee.setId(resultSet.getInt(1));
-        employee.setName(resultSet.getString(2));
-        employee.setEmail(resultSet.getString(3));
-        employee.setCountry(resultSet.getString(4));
-        return employee;
+        int id = resultSet.getInt(1);
+        String name = resultSet.getString(2);
+        String email = resultSet.getString(3);
+        String country = resultSet.getString(4);
+        return new Employee(id, name, country, email);
     }
 
     private static void saveNewEmployeeIntoDB(Employee employee, PreparedStatement ps) throws SQLException {
-        ps.setString(1, employee.getName());
-        ps.setString(2, employee.getEmail());
-        ps.setString(3, employee.getCountry());
+        ps.setString(1, employee.name());
+        ps.setString(2, employee.email());
+        ps.setString(3, employee.country());
     }
 }
