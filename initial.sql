@@ -4,5 +4,6 @@ CREATE TABLE users
     name    VARCHAR(255),
     email   VARCHAR(255),
     country VARCHAR(255),
+    isDeleted BOOLEAN DEFAULT false,
     PRIMARY KEY (id)
 )
