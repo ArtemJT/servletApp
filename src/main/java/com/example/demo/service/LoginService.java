@@ -16,15 +16,15 @@ import java.util.Map;
  * @author Artem Kovalov on 18.05.2023
  */
 public final class LoginService {
+
     private LoginService() {
     }
+
     private static final int INTERVAL_SESSION = 30 * 60;
-    private static final Map<String, JPasswordField> userBase = Map.of(
-            "admin", new JPasswordField("adminPass"),
-            "user", new JPasswordField("userPass")
-    );
-    public static void setUserSession(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+
+    private static final Map<String, JPasswordField> userBase = Map.of("admin", new JPasswordField("adminPass"), "user", new JPasswordField("userPass"));
+
+    public static void setUserSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
         String userParam = "user";
 
@@ -43,9 +43,11 @@ public final class LoginService {
             out.println("Either user name or password is wrong!");
         }
     }
+
     public static boolean isUserExists(String userName) {
         return userName != null && userBase.containsKey(userName);
     }
+
     public static boolean isPasswordMatches(String userName, String password) throws BadRequestException {
         if (isUserExists(userName) && (password != null)) {
             JPasswordField passwordField = userBase.get(userName);
@@ -54,6 +56,7 @@ public final class LoginService {
         }
         return false;
     }
+
     private static void setSessionInterval(HttpSession session, HttpServletResponse response, String user) {
         session.setMaxInactiveInterval(INTERVAL_SESSION);
         Cookie userName = new Cookie("user", user);
